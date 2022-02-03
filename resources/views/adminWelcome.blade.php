@@ -11,7 +11,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
-    {{-- <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script> --}}
+    <!-- {{-- <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script> --}} -->
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -47,6 +47,8 @@
                 </div>
             @endif
             <div class="text-danger">
+                <h2 style="position: reponsive">AdminWelcome
+                </h2>
             </div>
             @if($errors)
                 <div class="alert alert-danger">
@@ -59,11 +61,18 @@
             
 
             @endif
-            @auth
             <div class="col-md-12">
-                <h3>{{auth()->user()->name}}</h3>
+                @if(Auth::guard('admin')->check())
+    Hello {{Auth::guard('admin')->user()->name}} 
+    <p>Yoy are logged from admin guard</p>
+                @elseif(Auth::user())
+                    Hello {{Auth::user()->name}}
+                    <p>Yoy are logged from user guard</p>
+
+                @endif
             </div>
-            @endauth
+            
+            
                 <form id="demo-form" action="{{route('test.store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
